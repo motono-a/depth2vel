@@ -32,8 +32,8 @@ class image_converter:
     self.wall_roi_r = 364
     self.wall_roi_t = 150
     self.wall_roi_b = 160
-    self.wall_turn = 30.0
-    self.angle_offset = 22.0/180.0*3.14
+    self.wall_turn = 80.0
+    self.angle_offset = 0.0/180.0*3.14
     #self.angle_offset = 0.19
 
   def callback(self,data):
@@ -60,9 +60,9 @@ class image_converter:
     #print(band_max)
 
     #convert vel
-    speed=-0.2
+    speed=-0.15
     degree=self.cam_angle*(self.roi_l+band_max_index)/self.cam_w - self.cam_angle/2;
-    angle_d = (degree - self.angle_d)*self.kd
+    angle_d = (degree - self.angle_d)*self.kd/180*3.14;
     self.angle_d = degree
 
     # near wall case
@@ -80,7 +80,7 @@ class image_converter:
     #wall_ave = band_max
 
     if wall_ave<self.wall_check :
-       speed=0.1
+       speed=-0.15
        degree=wall_turn
        self.angle_i = 0.0
 
@@ -98,7 +98,7 @@ class image_converter:
        self.angle_i = -self.angle_i_limit
 
 
-    angle_mix = angle_kp + self.angle_i + self.angle_offset
+    angle_mix = angle_kp + self.angle_i + angle_d + self.angle_offset
 
     #print(speed)
     #print(angle)

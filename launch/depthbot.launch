@@ -18,14 +18,28 @@
 
 
   <!-- realsense-ros -->
-  <include file="$(find ad_launches)/launch/rs_camera.launch"/>
+  <!-- <include file="$(find ad_launches)/launch/rs_camera.launch"/> -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
+    <arg name="enable_fisheye" value="false" />
+    <arg name="enable_infra"   value="false" />
+    <arg name="enable_infra1"  value="false" />
+    <arg name="enable_infra2"  value="false" />
+    <arg name="enable_color"   value="false" />
+    <arg name="enable_gyro"    value="false" />
+    <arg name="enable_accel"   value="false" />
+
+    <arg name="enable_depth"   value="true" />
+    <arg name="depth_width"    value="424" />
+    <arg name="depth_height"   value="240" />
+    <arg name="depth_fps"      value="90" />
+  </include>
 
   <!-- depth2vel -->
   <node name="depth2vel" pkg="depth2vel" type="depth2vel.py" output="screen"/>
 
 
   <!-- jetbot ros -->
-  <node name="motor_controller" pkg="jetbot_ros" type="jetbot_controller" output="screen"/> <!--output="screen"/> -->
+  <node name="motor_controller" pkg="jetbot_ros" type="jetbot_controller" output="screen"/>
   <remap from="/cmd_vel" to="/mobile_base_controller/cmd_vel"/>  
 
 

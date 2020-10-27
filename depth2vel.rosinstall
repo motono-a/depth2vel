@@ -1,0 +1,10 @@
+- git:
+    local-name: depth2vel
+    uri: https://github.com/DaiGuard/depth2vel
+- git:
+    local-name: jetbot_ros
+    uri: https://github.com/DaiGuard/jetbot_ros
+    version: Controller
+- git:
+    local-name: realsense-ros
+    uri: https://github.com/IntelRealSense/realsense-ros.git

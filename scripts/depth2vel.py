@@ -18,8 +18,8 @@ class image_converter:
     self.roi_t = 100
     self.roi_b = 165
     self.pub = rospy.Publisher('mobile_base_controller/cmd_vel', Twist, queue_size=1)
-    self.kp = 0.4
-    self.ki = 0.01
+    self.kp = 0.3
+    self.ki = 0.005
     self.kd = 0.0
     self.angle_i = 0.0
     self.angle_i_limit = 0.3
@@ -60,7 +60,7 @@ class image_converter:
     #print(band_max)
 
     #convert vel
-    speed=-0.25
+    speed=-0.30
     degree=self.cam_angle*(self.roi_l+band_max_index)/self.cam_w - self.cam_angle/2;
     angle_d = (degree - self.angle_d)*self.kd/180*3.14;
     self.angle_d = degree

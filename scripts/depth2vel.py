@@ -27,13 +27,13 @@ class image_converter:
     self.cam_w = 424
     self.cam_h = 240.0
     self.cam_angle = 85.2
-    self.wall_check = 250.0
+    self.wall_check = 220.0
     self.wall_roi_l = 40
     self.wall_roi_r = 364
     self.wall_roi_t = 150
     self.wall_roi_b = 160
     self.wall_turn = 80.0
-    self.angle_offset = 0.0/180.0*3.14
+    self.angle_offset = 3.0/180.0*3.14
     #self.angle_offset = 0.19
 
   def callback(self,data):

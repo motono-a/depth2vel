@@ -60,7 +60,7 @@ class image_converter:
     #print(band_max)
 
     #convert vel
-    speed=-0.15
+    speed=-0.25
     degree=self.cam_angle*(self.roi_l+band_max_index)/self.cam_w - self.cam_angle/2;
     angle_d = (degree - self.angle_d)*self.kd/180*3.14;
     self.angle_d = degree

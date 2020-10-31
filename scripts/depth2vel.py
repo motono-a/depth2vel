@@ -18,8 +18,8 @@ class image_converter:
     self.roi_t = 100
     self.roi_b = 165
     self.pub = rospy.Publisher('mobile_base_controller/cmd_vel', Twist, queue_size=1)
-    self.kp = 0.6
-    self.ki = 0.03
+    self.kp = 0.5
+    self.ki = 0.02
     self.kd = 0.0
     self.angle_i = 0.0
     self.angle_i_limit = 0.3

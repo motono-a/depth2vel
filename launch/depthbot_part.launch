@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <!-- view -->
+  <arg name="model" default="$(find jetbot_ros)/model/jetbot.urdf"/>
+  <arg name="gui" default="true"/>
+  <arg name="rvizconfig" default="$(find jetbot_ros)/rviz/urdf.rviz" />
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="laserlink_broadcaster" args="0.05 0 0.03 0 0 0 robot__chassis base_laser" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="chassis_broadcaster" args="0 0 0 0 0 0 robot__chassis base_link" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="odom_broadcaster" args="0 0 0 0 0 0 map odom" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="cameralink_broadcaster" args="0.05 0.03 0.14 0 0 0 robot__chassis camera_link" />
+
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)"/>
+  
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+  <!-- realsense-ros -->
+  <!-- <include file="$(find ad_launches)/launch/rs_camera.launch"/> -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
+    <arg name="enable_fisheye" value="false" />
+    <arg name="enable_infra"   value="false" />
+    <arg name="enable_infra1"  value="false" />
+    <arg name="enable_infra2"  value="false" />
+    <arg name="enable_color"   value="false" />
+    <arg name="enable_gyro"    value="false" />
+    <arg name="enable_accel"   value="false" />
+
+    <arg name="enable_depth"   value="true" />
+    <arg name="depth_width"    value="424" />
+    <arg name="depth_height"   value="240" />
+    <arg name="depth_fps"      value="90" />
+  </include>
+
+  <!-- depth2vel -->
+  <!--<node name="depth2vel" pkg="depth2vel" type="depth2vel.py" output="screen"/>-->
+
+
+  <!-- jetbot ros -->
+  <node name="motor_controller" pkg="jetbot_ros" type="jetbot_controller" output="screen"/>
+  <remap from="/cmd_vel" to="/mobile_base_controller/cmd_vel"/>  
+
+
+  <rosparam file="$(find jetbot_ros)/config/diff_drive.yaml" command="load" />
+  <node name="jetbot_controller_manager" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="mobile_base_controller"/>
+  
+</launch>
